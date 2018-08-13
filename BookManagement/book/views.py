@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.http import Http404
 
+import json
+
 from .models import Book
 
 def index(request):
@@ -29,14 +31,18 @@ def read_id(request, book_id):
         book = Book.objects.get(book_id=book_id)
     except Book.DoesNotExist:
         raise Http404("Book does not exist")
-    return render(request, 'book/read.html',{'book':book})
+    book_dict = {'book_id': book.book_id, 'book_name': book.book_name, 'book_author':book.book_author}
+    json_book = json.dumps(book_dict, sort_keys=True, indent=4)
+    return HttpResponse(json_book)
 
 def read_name(request, book_name):
     try:
         book = Book.objects.get(book_name=book_name)
     except Book.DoesNotExist:
         raise Http404("Book does not exist")
-    return render(request, 'book/read.html',{'book':book})
+    book_dict = {'book_id': book.book_id, 'book_name': book.book_name, 'book_author':book.book_author}
+    json_book = json.dumps(book_dict, sort_keys=True, indent=4)
+    return HttpResponse(json_book)
 
 def delete(request, book_id):
     try:
@@ -55,9 +61,10 @@ def search(request, book_name):
         for each_book in all_book_list:
             if book_name in each_book.book_name:
                 include_name_list.append(each_book)
-    template = loader.get_template('book/index.html')
-    context = {
-        'all_book_list': include_name_list,
-    }
-    return HttpResponse(template.render(context, request))
+    book_dict_list = []
+    for each_book in include_name_list:
+        book_dict = {'book_id': each_book.book_id, 'book_name': each_book.book_name, 'book_author':each_book.book_author}
+        book_dict_list.append(book_dict)
+    json_book_list = json.dumps(book_dict_list, sort_keys=True, indent=4)
+    return HttpResponse(json_book_list)
 
