@@ -16,18 +16,35 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-def create(request):
-    return HttpResponse("create a book ! ")
+def create(request, book_id, book_name, book_author):
+    try:
+        new_book = Book(book_id=book_id, book_name=book_name, book_author=book_author)
+        new_book.save()
+    except:
+        raise Http404("Book is not be created")
+    return HttpResponse("Create a book successfully! id:%s, name:%s , author: %s" % (book_id, book_name, book_author))
 
-def read(request, book_id):
+def read_id(request, book_id):
     try:
         book = Book.objects.get(pk=book_id)
     except Book.DoesNotExist:
         raise Http404("Book does not exist")
     return render(request, 'book/read.html',{'book':book})
 
-def delete(request):
-    return HttpResponse("delete a book ! ")
+def read_name(request, book_name):
+    try:
+        book = Book.objects.get(book_name=book_name)
+    except Book.DoesNotExist:
+        raise Http404("Book does not exist")
+    return render(request, 'book/read.html',{'book':book})
+
+def delete(request, book_id):
+    try:
+        book = Book.objects.get(pk=book_id)
+        book.delete()
+    except Book.DoesNotExist:
+        raise Http404("Book does not exist")
+    return HttpResponse("delete a book ! book_id: %s" % book_id)
 
 def search(request):
     return HttpResponse("search books ! ")
