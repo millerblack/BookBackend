@@ -57,7 +57,7 @@ def search(request, book_name):
                 include_name_list.append(each_book)
     template = loader.get_template('book/index.html')
     context = {
-        'include_name_list': include_name_list,
+        'all_book_list': include_name_list,
     }
     return HttpResponse(template.render(context, request))
 
