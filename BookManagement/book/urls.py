@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'book'
 urlpatterns = [
+            path('test/', views.test, name='test'),
             path('', views.index, name='index'),
             path('create/<int:book_id>/<str:book_name>/<str:book_author>/', views.create, name='create'),
             path('read/id/<int:book_id>/', views.read_id, name='read_id'),

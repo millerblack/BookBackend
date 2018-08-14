@@ -10,6 +10,15 @@ import json
 
 from .models import Book
 
+def test(request):
+    all_book_list = Book.objects.order_by('id')[:]
+    template = loader.get_template('book/test.html')
+    context = {
+        'all_book_list': all_book_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+
 def index(request):
     all_book_list = Book.objects.order_by('id')[:]
     template = loader.get_template('book/index.html')
