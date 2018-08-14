@@ -1,6 +1,6 @@
 $(document).ready(function(){
         $.getJSON("/book/search/*/",function(data){
-            $.each(data.book_dict_list,function(i,item){
+            $.each(data.request_result,function(i,item){
 	        var tmp_tr=$('<tr></tr>');
                 var tmp_td_book_id=$('<td></td>').text(item.book_id);
                 var tmp_td_book_name=$('<td></td>').text(item.book_name);

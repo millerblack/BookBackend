@@ -32,36 +32,54 @@ def create(request, book_id, book_name, book_author):
     try:
         new_book = Book(book_id=book_id, book_name=book_name, book_author=book_author)
         new_book.save()
+        book_dict = {'book_id': book_id, 'book_name': book_name, 'book_author':book_author}
+        request_result = book_dict
+        status = 'success'
     except:
-        raise Http404("Book is not be created")
-    return HttpResponse("Create a book successfully! id:%s, name:%s , author: %s" % (book_id, book_name, book_author))
+        status = 'failure'
+        request_result = 'Book is not be created.'
+    request_feedback = {'status': status, 'request_result': request_result}
+    json_request_feedback = json.dumps(request_feedback, sort_keys=True, indent=4)
+    return HttpResponse(json_request_feedback)
 
 def read_id(request, book_id):
     try:
         book = Book.objects.get(book_id=book_id)
+        book_dict = {'book_id': book.book_id, 'book_name': book.book_name, 'book_author':book.book_author}
+        request_result = book_dict
+        status = 'success'
     except Book.DoesNotExist:
-        raise Http404("Book does not exist")
-    book_dict = {'book_id': book.book_id, 'book_name': book.book_name, 'book_author':book.book_author}
-    json_book = json.dumps(book_dict, sort_keys=True, indent=4)
-    return HttpResponse(json_book)
+        status = 'failure'
+        request_result = 'Book does not exist'
+    request_feedback = {'status': status, 'request_result': request_result}
+    json_request_feedback = json.dumps(request_feedback, sort_keys=True, indent=4)
+    return HttpResponse(json_request_feedback)
 
 def read_name(request, book_name):
     try:
         book = Book.objects.get(book_name=book_name)
+        book_dict = {'book_id': book.book_id, 'book_name': book.book_name, 'book_author':book.book_author}
+        request_result = book_dict
+        status = 'success'
     except Book.DoesNotExist:
-        raise Http404("Book does not exist")
-    book_dict = {'book_id': book.book_id, 'book_name': book.book_name, 'book_author':book.book_author}
-    json_book = json.dumps(book_dict, sort_keys=True, indent=4)
-    return HttpResponse(json_book)
+        status = 'failure'
+        request_result = 'Book does not exist'
+    request_feedback = {'status': status, 'request_result': request_result}
+    json_request_feedback = json.dumps(request_feedback, sort_keys=True, indent=4)
+    return HttpResponse(json_request_feedback)
 
 def delete(request, book_id):
     try:
         book = Book.objects.get(book_id=book_id)
         book.delete()
+        status = 'success'
+        request_result = 'Deleted books id: %s' % book_id
     except Book.DoesNotExist:
-        raise Http404("Book does not exist")
-    return HttpResponseRedirect(reverse('book:test'))
-    #return HttpResponse("delete a book ! book_id: %s" % book_id)
+        status = 'failure'
+        request_result = 'Book does not exist'
+    request_feedback = {'status': status, 'request_result': request_result}
+    json_request_feedback = json.dumps(request_feedback, sort_keys=True, indent=4)
+    return HttpResponse(json_request_feedback)
 
 def search(request, book_name):
     all_book_list = Book.objects.order_by('id')[:]
@@ -76,6 +94,8 @@ def search(request, book_name):
     for each_book in include_name_list:
         book_dict = {'book_id': each_book.book_id, 'book_name': each_book.book_name, 'book_author':each_book.book_author}
         book_dict_list.append(book_dict)
-    json_book_list = json.dumps({'book_dict_list': book_dict_list}, sort_keys=True, indent=4)
-    return HttpResponse(json_book_list)
-
+    status = 'success'
+    request_result = book_dict_list
+    request_feedback = {'status': status, 'request_result': request_result}
+    json_request_feedback = json.dumps(request_feedback, sort_keys=True, indent=4)
+    return HttpResponse(json_request_feedback)
