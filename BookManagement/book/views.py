@@ -74,6 +74,6 @@ def search(request, book_name):
     for each_book in include_name_list:
         book_dict = {'book_id': each_book.book_id, 'book_name': each_book.book_name, 'book_author':each_book.book_author}
         book_dict_list.append(book_dict)
-    json_book_list = json.dumps(book_dict_list, sort_keys=True, indent=4)
+    json_book_list = json.dumps({'book_dict_list': book_dict_list}, sort_keys=True, indent=4)
     return HttpResponse(json_book_list)
 
