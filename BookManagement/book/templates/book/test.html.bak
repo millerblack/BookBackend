@@ -64,6 +64,35 @@
                     </tr>
                 </thead>
                 <tbody id="book_table">
+                    <tr>
+                    <div class="col-md-12" role="group" aria-label="..." id="book_item">
+                        <td class="col-md-2">1</td>
+                        <td class="col-md-4">Arsenal</td>
+                        <td class="col-md-4">Arsene</td>
+                        <td class="col-md-2"><button type="button" style="border-radius: 0px;" class="btn btn-default col-md-6">delete</button></td>
+                    </div>
+                    </tr>
+                    <tr>
+                    <div class="col-md-12" role="group" aria-label="..." id="book_item">
+                        <td class="col-md-2">2</td>
+                        <td class="col-md-4">ACMilan</td>
+                        <td class="col-md-4">Kaka</td>
+                        <td class="col-md-2"><button type="button" style="border-radius: 0px;" class="btn btn-default col-md-6">delete</button></td>
+                    </div>
+                    </tr>
+                    <tr>
+                    <div class="col-md-12" role="group" aria-label="..." id="book_item">
+                        <td class="col-md-2">3</td>
+                        <td class="col-md-4">RealMadrid</td>
+                        <td class="col-md-4">C.Ronaldo</td>
+                        <td class="col-md-2"><button type="button" style="border-radius: 0px;" class="btn btn-default col-md-6">delete</button></td>
+                    </div>
+                    </tr>
+		    <tr>
+			<td>4</td>
+			<td>4</td>
+			<td>4</td>
+	            </tr>
                 </tbody>
             </table>
             <div class="btn-group-lg col-md-4" role="group" aria-label="..." id="btn-group-vertical-book_id">

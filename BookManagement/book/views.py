@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.template import loader
 from django.http import Http404
+from django.urls import reverse
 
 import json
 
@@ -59,7 +60,8 @@ def delete(request, book_id):
         book.delete()
     except Book.DoesNotExist:
         raise Http404("Book does not exist")
-    return HttpResponse("delete a book ! book_id: %s" % book_id)
+    return HttpResponseRedirect(reverse('book:test'))
+    #return HttpResponse("delete a book ! book_id: %s" % book_id)
 
 def search(request, book_name):
     all_book_list = Book.objects.order_by('id')[:]
