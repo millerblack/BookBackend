@@ -12,10 +12,9 @@ import json
 from .models import Book
 
 def index(request):
-    all_book_list = Book.objects.order_by('id')[:]
     template = loader.get_template('book/index.html')
     context = {
-        'all_book_list': all_book_list,
+        'pass': 'pass',
     }
     return HttpResponse(template.render(context, request))
 
@@ -75,8 +74,9 @@ def read_name(request, book_name):
 
 def delete(request, book_id):
     try:
-        book = Book.objects.get(book_id=book_id)
-        book.delete()
+        book_list = Book.objects.filter(book_id=book_id)
+        for each_book in book_list:
+            each_book.delete()
         status = 'success'
         request_result = 'Deleted books id: %s' % book_id
     except Book.DoesNotExist:
