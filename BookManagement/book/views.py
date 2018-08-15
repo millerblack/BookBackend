@@ -11,15 +11,6 @@ import json
 
 from .models import Book
 
-def test(request):
-    all_book_list = Book.objects.order_by('id')[:]
-    template = loader.get_template('book/test.html')
-    context = {
-        'all_book_list': all_book_list,
-    }
-    return HttpResponse(template.render(context, request))
-
-
 def index(request):
     all_book_list = Book.objects.order_by('id')[:]
     template = loader.get_template('book/index.html')
@@ -28,8 +19,21 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-def create(request, book_id, book_name, book_author):
+'''
+def index(request):
+    all_book_list = Book.objects.order_by('id')[:]
+    template = loader.get_template('book/index.html')
+    context = {
+        'all_book_list': all_book_list,
+    }
+    return HttpResponse(template.render(context, request))
+'''
+
+def create(request):
     try:
+        book_id = request.POST['new_book_id']
+        book_name = request.POST['new_book_name']
+        book_author = request.POST['new_book_author']
         new_book = Book(book_id=book_id, book_name=book_name, book_author=book_author)
         new_book.save()
         book_dict = {'book_id': book_id, 'book_name': book_name, 'book_author':book_author}
@@ -40,7 +44,8 @@ def create(request, book_id, book_name, book_author):
         request_result = 'Book is not be created.'
     request_feedback = {'status': status, 'request_result': request_result}
     json_request_feedback = json.dumps(request_feedback, sort_keys=True, indent=4)
-    return HttpResponse(json_request_feedback)
+    return HttpResponseRedirect(reverse('book:index'))
+    #return HttpResponse(json_request_feedback)
 
 def read_id(request, book_id):
     try:
