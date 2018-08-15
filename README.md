@@ -11,11 +11,19 @@
 * Search books  : http://xxx/bookmanager/book/search
 
 ### Set up and Run
+0. Install pip3 and django(if already have, pls skip)    
+    ```
+    $ sudo apt-get install python3-pip
+    $ pip3 install django
+    ```
 1. Clone the repo into your local Linux environment.       
-    ```$ git clone https://github.com/millerblack/BookBackend.git```
+    ```
+    $ cd ~/
+    $ git clone https://github.com/millerblack/BookBackend.git
+    ```
 2. Use manage.py to run Book Manager website.
     ```
-    $ cd BookBackend/BookManagement/
+    $ cd ~/BookBackend/BookManagement/
     $ python3 manage.py runserver 0:8000
     ```
 3. Access the Book Manager website by browser(eg: Chrome)          
